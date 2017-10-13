@@ -17,7 +17,7 @@ class UserDetail extends Component {
     const { id } = this.props.match.params;
     console.log("this.props", this.props)
     //map over the accounts for the user to create links to them.
-    let accounts = this.props.selectedUser.accounts.map(account => {
+    let accounts = this.props.users.accounts.map(account => {
       //creating a Link with the account type for
       //each account.
       return (
