@@ -6,10 +6,7 @@ import { bindActionCreators } from 'redux';
 //import router Link
 import { Link } from 'react-router-dom';
 
-
-
 class UserDetail extends Component {
-
   render() {
     if(!this.props.user) {
       return (
@@ -18,9 +15,9 @@ class UserDetail extends Component {
     }
     //get user id from params of URL
     const { id } = this.props.match.params;
+    console.log("this.props", this.props)
     //map over the accounts for the user to create links to them.
-    let accounts = this.props.user.accounts.map(account => {
-
+    let accounts = this.props.selectedUser.accounts.map(account => {
       //creating a Link with the account type for
       //each account.
       return (
@@ -29,7 +26,6 @@ class UserDetail extends Component {
             onClick={() => this.props.selectAccount(account)}
             to={`/users/${id}/${account.id}`}>{account.accountType}</Link>
         </div>
-
       )
     })
     return (
@@ -42,14 +38,11 @@ class UserDetail extends Component {
               <div>{this.props.user.email}</div>
               <div>{this.props.user.phone}</div>
               <div>{this.props.user.address}</div>
-
             </div>
             {accounts}
           </div>
-          <Link className="btn btn-primary" to="/users" >Back to List of Users</Link>
+          <Link className="btn btn-primary" to="/users">Back to List of Users</Link>
         </div>
-
-
       </div>
     );
   }
@@ -62,14 +55,10 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({
+      selectAccount: selectAccount
+  }, dispatch)
+}
 
-/*
-
-You will need to create a mapDispatchToProps function here and
-return the action creator selectAccount - HINT: see the UserList
-component.
-
-*/
-
-
-export default connect(mapStateToProps)(UserDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
